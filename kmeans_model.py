@@ -13,19 +13,6 @@ from pyspark.sql.types import *
 RANDOM_SEED = 1
 APP_NAME    = 'WDBC_KMeans'
 DATA_FILE   = 'data/wdbc.data'
-DATA_SCHEMA = StructType([
-    StructField('diagnosis', StringType(), True),
-    StructField('radius', FloatType(), True),
-    StructField('texture', FloatType(), True),
-    StructField('perimeter', FloatType(), True),
-    StructField('area', FloatType(), True),
-    StructField('smoothness', FloatType(), True),
-    StructField('compactness', FloatType(), True),
-    StructField('concavity', FloatType(), True),
-    StructField('concavepts', FloatType(), True),
-    StructField('symmetry', FloatType(), True),
-    StructField('fractaldim', FloatType(), True)
-])
 
 if __name__ == '__main__':
     # Set up the contexts
@@ -34,20 +21,12 @@ if __name__ == '__main__':
 
     # Load the data file and cast the headers
     # into a dataframe
-    data_file = sql.read.csv(
-        header=False,
-        inferSchema=False).map(
-        # THIS WON'T WORK!!!!
-        # Need to strip out the first comma and keep the rest of line intact
-        lambda row: row.split(',')[1] # Strip out the 'id' row
-        )
-    df = data_file.createDataFrame(
-        data_file,
-        schema=DATA_SCHEMA
-    )
+    data_file = sql.read.csv('data/wdbc.data', header=False)
+
+    # Convert all usable values (except the label) into floats
+    data_file_converted = data_file.select(*(data_file[c].cast('float').alias(\
+        c) for c in data_file.columns[2:]))
 
     # Create a set of LabeledPoints consisting
     # of <class, (rest of rows)>
-    labeled_set = df.rdd.map(
-        lambda row: LabeledPoint(row[0], row[])
-    )
+    labeled_set = data_file.rdd.map(lambda row: LabeledPoint(row[1], row[2:]))
