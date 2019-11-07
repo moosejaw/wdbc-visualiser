@@ -1,7 +1,7 @@
 # wdbc-visualiser
 A KMeans and Ensemble Learning model for visualising the Wisconsin Diagnostic Breast Cancer dataset.
 
-The dataset is available (https://archive.ics.uci.edu/ml/datasets/Breast+Cancer+Wisconsin+%28Diagnostic%29)[here]. You should place `wdbc.data` into a folder named `data` located in the root folder of this repository. If not, you can modify the `DATA_FILE` variable in the script to point to another location.
+The dataset is available [https://archive.ics.uci.edu/ml/datasets/Breast+Cancer+Wisconsin+%28Diagnostic%29](here). You should place `wdbc.data` into a folder named `data` located in the root folder of this repository. If not, you can modify the `DATA_FILE` variable in the script to point to another location.
 
 You need to have Apache Spark installed to run this script, along with the requirements specified in the Python script. You can `pip install` from the `requirements.txt` file in this repository if you want to.
 
