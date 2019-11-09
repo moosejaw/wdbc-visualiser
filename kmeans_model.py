@@ -11,12 +11,10 @@ import sklearn.metrics as metrics
 
 from os import listdir
 
-from pyspark.sql.types import *
 from pyspark import SparkContext
 from pyspark.sql import SQLContext
 from pyspark.mllib.linalg import Vectors
 from pyspark.mllib.regression import LabeledPoint
-from pyspark.mllib.linalg.distributed import RowMatrix
 from pyspark.mllib.clustering import KMeans, KMeansModel
 
 # Look into SVD!
@@ -26,7 +24,7 @@ from pyspark.mllib.clustering import KMeans, KMeansModel
 #
 # Plot an ROC curve
 
-RANDOM_SEED      = 54321
+RANDOM_SEED      = 12345
 CLUSTERS         = 2 # Binary classification (malignant/benign)
 APP_NAME         = 'WDBC_KMeans'
 DATA_FILE        = 'data/wdbc.data'
@@ -222,7 +220,7 @@ if __name__ == '__main__':
         auc = metrics.auc(fpr, tpr)
 
         # Plot the ROC curve
-        plt.title("ROC Curve")
+        plt.title("ROC curve for KMeans classifier")
         plt.plot(fpr, tpr, 'b', color='darkorange', label=f'AUC = {auc}')
         plt.plot([0, 1], [0, 1], linestyle='--')
         plt.xlim([0, 1])
